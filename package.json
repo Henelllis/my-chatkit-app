@@ -1,9 +1,10 @@
 {
   "name": "cRk94uW",
   "dependencies": {
+    "@pusher/chatkit": "0.7.12",
+    "babel-preset-stage-2": "^6.24.1",
     "react": "16.0.0",
-    "react-dom": "16.0.0",
-    "@pusher/chatkit": "0.7.12"
+    "react-dom": "16.0.0"
   },
   "devDependencies": {
     "webpack": "^2.0",
