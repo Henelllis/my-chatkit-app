@@ -2,16 +2,16 @@
   "name": "my-chatkit-app",
   "dependencies": {
     "@pusher/chatkit": "0.7.12",
+    "babel-preset-stage-2": "^6.24.1",
     "react": "16.0.0",
     "react-dom": "16.0.0"
   },
   "devDependencies": {
+    "webpack": "^2.0",
     "babel-core": "^6.0",
     "babel-loader": "^7.0",
     "babel-preset-env": "*",
-    "babel-preset-react": "*",
-    "babel-preset-stage-2": "^6.24.1",
-    "webpack": "^2.0"
+    "babel-preset-react": "*"
   },
   "scripts": {
     "build": "webpack",
