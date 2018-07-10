@@ -1052,6 +1052,11 @@ var App = function (_React$Component) {
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
             messages: []
+        }, _this.sendMessage = function (text) {
+            _this.currentUser.sendMessage({
+                text: text,
+                roomId: 11285075
+            });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
     //Reimplement state into Redux
@@ -1071,7 +1076,8 @@ var App = function (_React$Component) {
             });
 
             chatManager.connect().then(function (currentUser) {
-                currentUser.subscribeToRoom({
+                _this2.currentUser = currentUser;
+                _this2.currentUser.subscribeToRoom({
                     roomId: 11285075,
                     hooks: {
                         onNewMessage: function onNewMessage(message) {
@@ -1095,7 +1101,7 @@ var App = function (_React$Component) {
                 { className: 'app' },
                 _react2.default.createElement(_RoomList2.default, null),
                 _react2.default.createElement(_MessageList2.default, { messages: this.state.messages }),
-                _react2.default.createElement(_SendMessageForm2.default, null),
+                _react2.default.createElement(_SendMessageForm2.default, { onSendMessage: this.sendMessage }),
                 _react2.default.createElement(_NewRoomForm2.default, null)
             );
         }
@@ -1353,15 +1359,14 @@ var SendMessageForm = function (_React$Component) {
             });
         }, _this.onHandleSubmit = function (event) {
             event.preventDefault();
-            console.log('[SUBMIITED]: ', _this.state.message);
-            //Send off message
+            _this.props.onSendMessage(_this.state.message);
+            _this.setState({ message: '' });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(SendMessageForm, [{
         key: 'render',
         value: function render() {
-
             return _react2.default.createElement(
                 'form',
                 {

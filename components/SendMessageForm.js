@@ -14,21 +14,20 @@ class SendMessageForm extends React.Component {
 
     onHandleSubmit = event =>  {
         event.preventDefault();
-        console.log('[SUBMIITED]: ' , this.state.message);
-        //Send off message
+        this.props.onSendMessage(this.state.message);
+        this.setState({message: ''});
     }
 
     render() {
-        
         return (
             <form
-                onSubmit ={this.onHandleSubmit}
-                className="send-message-form">
+                onSubmit= {this.onHandleSubmit}
+                className= "send-message-form">
                 <input
-                    onChange={this.onHandleChange}
-                    value={this.state.message}
-                    placeholder="Type out your message"
-                    type="text" />
+                    onChange= {this.onHandleChange}
+                    value= {this.state.message}
+                    placeholder= "Type out your message"
+                    type= "text" />
             </form>
         )
     };
