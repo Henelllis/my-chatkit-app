@@ -1335,20 +1335,43 @@ var SendMessageForm = function (_React$Component) {
     _inherits(SendMessageForm, _React$Component);
 
     function SendMessageForm() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, SendMessageForm);
 
-        return _possibleConstructorReturn(this, (SendMessageForm.__proto__ || Object.getPrototypeOf(SendMessageForm)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SendMessageForm.__proto__ || Object.getPrototypeOf(SendMessageForm)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            message: ''
+        }, _this.onHandleChange = function (event) {
+            _this.setState({
+                message: event.target.value
+            });
+        }, _this.onHandleSubmit = function (event) {
+            event.preventDefault();
+            console.log('[SUBMIITED]: ', _this.state.message);
+            //Send off message
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(SendMessageForm, [{
-        key: "render",
+        key: 'render',
         value: function render() {
+
             return _react2.default.createElement(
-                "form",
-                { className: "send-message-form" },
-                _react2.default.createElement("input", {
-                    placeholder: "SendMessageForm",
-                    type: "text" })
+                'form',
+                {
+                    onSubmit: this.onHandleSubmit,
+                    className: 'send-message-form' },
+                _react2.default.createElement('input', {
+                    onChange: this.onHandleChange,
+                    value: this.state.message,
+                    placeholder: 'Type out your message',
+                    type: 'text' })
             );
         }
     }]);
