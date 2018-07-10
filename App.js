@@ -11,6 +11,8 @@ class App extends React.Component {
     //Reimplement state into Redux
     state = {
         messages:[],
+        joinableRooms:[],
+        joinedRooms:[]
     }
 
     componentDidMount () {
@@ -25,6 +27,18 @@ class App extends React.Component {
         chatManager.connect()
         .then( currentUser =>{
             this.currentUser = currentUser;
+
+            //TODO break into own function
+            this.currentUser.getJoinableRooms()
+            .then(joinableRooms => {
+                this.setState({joinableRooms,
+                                joinedRooms: this.currentUser.rooms
+                })
+            })
+            .catch(error => {
+                console.log('[ERROR FETCHING ROOMS]: ', error);
+            });
+
             this.currentUser.subscribeToRoom({
                 roomId: 11285075,
                 hooks:{
@@ -38,7 +52,7 @@ class App extends React.Component {
             })
         })
         .catch( err =>{
-            console.log('error: ', err );
+            console.log('[Connection]: ', err );
         })
     }
 
@@ -50,10 +64,9 @@ class App extends React.Component {
     }
 
     render() {
-        console.log('state.messages: ', this.state.messages);
         return (
             <div className="app">
-                <RoomList />
+                <RoomList rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}/>
                 <MessageList messages={this.state.messages}/>                
                 <SendMessageForm onSendMessage={this.sendMessage} />
                 <NewRoomForm />
