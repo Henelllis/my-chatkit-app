@@ -1,33 +1,22 @@
-import React from 'react'
+import React from 'react';
+import Message from './Message';
 
-
-const DUMMY_DATA = [
-    {
-        senderId: 'Hendude',
-        text: 'Hey, how is it going?'
-    },
-    {
-        senderId: 'Reptyl',
-        text: 'Great! How about you?'
-    },
-    {
-        senderId: 'Hendude',
-        text: 'Good to hear! I am great as well'
-    }
-]
-
-const MessageList = () => {
+const messageList = (props) => {
    
         return (
             <div className="message-list">
-            {DUMMY_DATA.map((message, index)=>{
-                return (<div className="message" key={index}>
-                            <div className="message-username">{message.senderId}</div>
-                            <div className="message-text">{message.text}</div>
-                    </div>)
-            })}
+                {props.messages.map((message, index)=>{
+                    return <Message 
+                                key={index}
+                                userName={message.senderId}
+                                messageText={message.text}
+                            />
+                    })
+                }
             </div>
         )
 }
 
-export default MessageList
+
+
+export default messageList
