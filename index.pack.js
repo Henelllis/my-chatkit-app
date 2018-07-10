@@ -1057,7 +1057,8 @@ var App = function (_React$Component) {
             roomId: ''
         }, _this.getJoinableRooms = function () {
             _this.currentUser.getJoinableRooms().then(function (joinableRooms) {
-                _this.setState({ joinableRooms: joinableRooms,
+                _this.setState({
+                    joinableRooms: joinableRooms,
                     joinedRooms: _this.currentUser.rooms
                 });
             }).catch(function (error) {
@@ -1097,7 +1098,7 @@ var App = function (_React$Component) {
 
             var chatManager = new _chatkit2.default.ChatManager({
                 instanceLocator: _config.instanceLocator,
-                userId: 'Frogger',
+                userId: 'Pippin',
                 tokenProvider: new _chatkit2.default.TokenProvider({
                     url: _config.tokenUrl
                 })
@@ -1116,7 +1117,9 @@ var App = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'app' },
-                _react2.default.createElement(_RoomList2.default, { subscribeToRoom: this.subscribeToRoom,
+                _react2.default.createElement(_RoomList2.default, {
+                    roomId: this.state.roomId,
+                    subscribeToRoom: this.subscribeToRoom,
                     rooms: [].concat(_toConsumableArray(this.state.joinableRooms), _toConsumableArray(this.state.joinedRooms)) }),
                 _react2.default.createElement(_MessageList2.default, { messages: this.state.messages }),
                 _react2.default.createElement(_SendMessageForm2.default, { onSendMessage: this.sendMessage }),
@@ -1293,6 +1296,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var RoomList = function RoomList(props) {
     return _react2.default.createElement(
         "div",
@@ -1305,13 +1310,17 @@ var RoomList = function RoomList(props) {
                 null,
                 "Your Rooms"
             ),
-            props.rooms.map(function (room) {
+            [].concat(_toConsumableArray(props.rooms)).sort(function (a, b) {
+                return a.id - b.id;
+            }).map(function (room) {
+                var active = props.roomId === room.id ? "active" : "";
                 return _react2.default.createElement(
                     "li",
-                    { key: room.id, className: "room" },
+                    { key: room.id, className: "room " + active },
                     _react2.default.createElement(
                         "a",
                         {
+                            onActive: true,
                             onClick: function onClick() {
                                 props.subscribeToRoom(room.id);
                             },

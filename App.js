@@ -19,7 +19,7 @@ class App extends React.Component {
     componentDidMount () {
         const chatManager = new Chatkit.ChatManager({
             instanceLocator,
-            userId: 'Frogger',
+            userId: 'Pippin',
             tokenProvider: new Chatkit.TokenProvider({
                 url: tokenUrl
             })
@@ -38,8 +38,9 @@ class App extends React.Component {
     getJoinableRooms = () => {
         this.currentUser.getJoinableRooms()
         .then(joinableRooms => {
-            this.setState({joinableRooms,
-                            joinedRooms: this.currentUser.rooms
+            this.setState({
+                    joinableRooms,
+                    joinedRooms: this.currentUser.rooms
             })
         })
         .catch(error => {
@@ -78,7 +79,9 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <RoomList subscribeToRoom={this.subscribeToRoom}
+                <RoomList 
+                          roomId={this.state.roomId}
+                          subscribeToRoom={this.subscribeToRoom}
                           rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}/>
                 <MessageList messages={this.state.messages}/>                
                 <SendMessageForm onSendMessage={this.sendMessage} />
