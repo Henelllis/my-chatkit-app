@@ -1086,6 +1086,14 @@ var App = function (_React$Component) {
                 text: text,
                 roomId: _this.state.roomId
             });
+        }, _this.createRoom = function (name) {
+            _this.currentUser.createRoom({
+                name: name
+            }).then(function (room) {
+                _this.subscribeToRoom(room.id);
+            }).catch(function (error) {
+                console.log('ERROR CREATING NEW ROOM ', error);
+            });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
     //Reimplement state into Redux
@@ -1098,7 +1106,7 @@ var App = function (_React$Component) {
 
             var chatManager = new _chatkit2.default.ChatManager({
                 instanceLocator: _config.instanceLocator,
-                userId: 'Pippin',
+                userId: 'Frogger',
                 tokenProvider: new _chatkit2.default.TokenProvider({
                     url: _config.tokenUrl
                 })
@@ -1121,9 +1129,13 @@ var App = function (_React$Component) {
                     roomId: this.state.roomId,
                     subscribeToRoom: this.subscribeToRoom,
                     rooms: [].concat(_toConsumableArray(this.state.joinableRooms), _toConsumableArray(this.state.joinedRooms)) }),
-                _react2.default.createElement(_MessageList2.default, { messages: this.state.messages }),
-                _react2.default.createElement(_SendMessageForm2.default, { onSendMessage: this.sendMessage }),
-                _react2.default.createElement(_NewRoomForm2.default, null)
+                _react2.default.createElement(_MessageList2.default, {
+                    roomId: this.state.roomId,
+                    messages: this.state.messages }),
+                _react2.default.createElement(_SendMessageForm2.default, {
+                    disabled: !this.state.roomId,
+                    onSendMessage: this.sendMessage }),
+                _react2.default.createElement(_NewRoomForm2.default, { createRoom: this.createRoom })
             );
         }
     }]);
@@ -1190,9 +1202,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(16);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _Message = __webpack_require__(40);
 
@@ -1200,22 +1218,68 @@ var _Message2 = _interopRequireDefault(_Message);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var messageList = function messageList(props) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return _react2.default.createElement(
-        'div',
-        { className: 'message-list' },
-        props.messages.map(function (message, index) {
-            return _react2.default.createElement(_Message2.default, {
-                key: index,
-                userName: message.senderId,
-                messageText: message.text
-            });
-        })
-    );
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-exports.default = messageList;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MessageList = function (_Component) {
+    _inherits(MessageList, _Component);
+
+    function MessageList() {
+        _classCallCheck(this, MessageList);
+
+        return _possibleConstructorReturn(this, (MessageList.__proto__ || Object.getPrototypeOf(MessageList)).apply(this, arguments));
+    }
+
+    _createClass(MessageList, [{
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate() {
+            var node = _reactDom2.default.findDOMNode(this);
+            this.shouldScrollToBottom = node.scrollTop + node.clientHeight + 100 >= node.scrollHeight;
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            if (this.shouldScrollToBottom) {
+                var node = _reactDom2.default.findDOMNode(this);
+                node.scrollTop = node.scrollHeight;
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var messageList = null;
+            if (!this.props.roomId) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'message-list' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'join-room' },
+                        '\u2190 Join a room!'
+                    )
+                );
+            }
+            return _react2.default.createElement(
+                'div',
+                { className: 'message-list' },
+                this.props.messages.map(function (message, index) {
+                    return _react2.default.createElement(_Message2.default, {
+                        key: index,
+                        userName: message.senderId,
+                        messageText: message.text
+                    });
+                })
+            );
+        }
+    }]);
+
+    return MessageList;
+}(_react.Component);
+
+exports.default = MessageList;
 
 /***/ }),
 /* 18 */
@@ -1246,28 +1310,50 @@ var NewRoomForm = function (_React$Component) {
     _inherits(NewRoomForm, _React$Component);
 
     function NewRoomForm() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, NewRoomForm);
 
-        return _possibleConstructorReturn(this, (NewRoomForm.__proto__ || Object.getPrototypeOf(NewRoomForm)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NewRoomForm.__proto__ || Object.getPrototypeOf(NewRoomForm)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            roomName: ''
+        }, _this.onChangeHandler = function (event) {
+            _this.setState({
+                roomName: event.target.value
+            });
+        }, _this.onSubmitHandler = function (event) {
+            event.preventDefault();
+            _this.props.createRoom(_this.state.roomName);
+            _this.setState({
+                roomName: ''
+            });
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(NewRoomForm, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                "div",
-                { className: "new-room-form" },
+                'div',
+                { className: 'new-room-form' },
                 _react2.default.createElement(
-                    "form",
-                    null,
-                    _react2.default.createElement("input", {
-                        type: "text",
-                        placeholder: "NewRoomForm",
+                    'form',
+                    { onSubmit: this.onSubmitHandler },
+                    _react2.default.createElement('input', {
+                        onChange: this.onChangeHandler,
+                        type: 'text',
+                        value: this.state.roomName,
+                        placeholder: 'NewRoomForm',
                         required: true }),
                     _react2.default.createElement(
-                        "button",
-                        { id: "create-room-btn", type: "submit" },
-                        "+"
+                        'button',
+                        { id: 'create-room-btn', type: 'submit' },
+                        '+'
                     )
                 )
             );
@@ -1397,6 +1483,7 @@ var SendMessageForm = function (_React$Component) {
                     onSubmit: this.onHandleSubmit,
                     className: 'send-message-form' },
                 _react2.default.createElement('input', {
+                    disabled: this.props.disabled,
                     onChange: this.onHandleChange,
                     value: this.state.message,
                     placeholder: 'Type out your message',

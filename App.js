@@ -19,7 +19,7 @@ class App extends React.Component {
     componentDidMount () {
         const chatManager = new Chatkit.ChatManager({
             instanceLocator,
-            userId: 'Pippin',
+            userId: 'Frogger',
             tokenProvider: new Chatkit.TokenProvider({
                 url: tokenUrl
             })
@@ -76,6 +76,18 @@ class App extends React.Component {
         });
     }
 
+    createRoom = (name) => {
+        this.currentUser.createRoom({
+            name
+        })
+        .then(room =>{
+            this.subscribeToRoom(room.id)
+        })
+        .catch(error => {
+            console.log('ERROR CREATING NEW ROOM ' , error)
+        });
+    }
+
     render() {
         return (
             <div className="app">
@@ -83,9 +95,13 @@ class App extends React.Component {
                           roomId={this.state.roomId}
                           subscribeToRoom={this.subscribeToRoom}
                           rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}/>
-                <MessageList messages={this.state.messages}/>                
-                <SendMessageForm onSendMessage={this.sendMessage} />
-                <NewRoomForm />
+                <MessageList
+                    roomId={this.state.roomId} 
+                    messages={this.state.messages}/>                
+                <SendMessageForm
+                    disabled={!this.state.roomId} 
+                    onSendMessage={this.sendMessage} />
+                <NewRoomForm createRoom={this.createRoom}/>
             </div>
         );
     }
