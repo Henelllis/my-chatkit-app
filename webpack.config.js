@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   "output": {
     "filename": "[name].pack.js"
@@ -24,4 +26,12 @@ module.exports = {
   "entry": {
     "index": "./src/index"
   }
+  ,
+  plugins:[
+    new HtmlWebpackPlugin({
+      template: __dirname +'/src/index.html',
+      filename:'index.html',
+      inject: 'body',
+    })
+  ]
 };
