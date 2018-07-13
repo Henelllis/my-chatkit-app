@@ -30,7 +30,7 @@ export const loginFail = (error) => {
 export const login = (userName) => {
     
     return dispatch => {
-
+        dispatch(loginStart());
         const chatManager = new Chatkit.ChatManager({
             instanceLocator,
             userId: userName,

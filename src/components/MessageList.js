@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 import Message from './Message';
 
@@ -21,11 +22,20 @@ class MessageList extends Component{
    
     render(){
         const messageList = null;
+
+        if(!this.props.user){
+            return (
+                <div>
+                    LOADING LOADING
+                </div>
+            )
+        }
+
         if( !this.props.roomId ) {
             return (
                 <div className="message-list">
                     <div className="join-room">
-                        &larr; Join a room!
+                        &rarr; Join a room!
                     </div>
                 </div>
             )
@@ -45,6 +55,17 @@ class MessageList extends Component{
     }
 }
 
+const mapStateToProps = state => {
+    return{
+        loading: state.login.loading
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: () => dispatch(actions.login('Frogger'))
+    }
+}
 
 
-export default MessageList
+export default connect(mapStateToProps)(MessageList);
