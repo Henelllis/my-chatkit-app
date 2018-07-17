@@ -24,6 +24,8 @@
     "webpack": "^4.16.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "webpack",
     "watch": "webpack -w"
   }
