@@ -20,7 +20,7 @@ html, body {
     height: 100%;
 }
 
-.app {
+.layout {
     display: grid;
     height: 100%;
     grid-template-columns: repeat(6, 1fr);
@@ -189,4 +189,52 @@ html, body {
 .help-text {
     position: absolute;
     top: 10px;
+}
+
+.login {
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
+    grid-template-areas: 
+        ". . . . . ."
+        ". l l l l ."
+        ". i i i i ."
+        ". b b b b ."
+        ". . . . . ."
+        ". . . . . .";
+}
+
+.login-input-area {
+    grid-area: l;
+}
+
+.login-button-area {
+    grid-area: b;
+}
+
+.login-info-area {
+    grid-area: i;
+}
+
+.login-input{
+    font-size: 50px;
+    
+    /* display: flex; */
+    padding: 0px;
+    height: 20%;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+.login-button{
+    /* display: flex; */
+    font-size: 50px;
+    padding: 0px;
+    height: 20%;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    box-shadow: black 20px
 }
