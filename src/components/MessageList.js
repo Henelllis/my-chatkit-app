@@ -6,8 +6,8 @@ import Message from './Message';
 
 class MessageList extends Component{
 
-    componentDidMount(){
-        console.log("IM HERE DING BAT BRIGADE");
+    shouldComponentUpdate(nextProps, nextState){
+        return (nextProps.roomId !== this.props.roomId) || (nextProps.messages !== this.props.messages);
     }
 
     componentWillUpdate(){
@@ -27,19 +27,12 @@ class MessageList extends Component{
     render(){
         const messageList = null;
 
-        if(!this.props.user){
-            return (
-                <div>
-                    LOADING LOADING
-                </div>
-            )
-        }
 
         if( !this.props.roomId ) {
             return (
                 <div className="message-list">
                     <div className="join-room">
-                        &rarr; Join a room!
+                         Join a room! &rarr;
                     </div>
                 </div>
             )
@@ -65,11 +58,6 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogin: () => dispatch(actions.login('Frogger'))
-    }
-}
 
 
 export default connect(mapStateToProps)(MessageList);

@@ -2,7 +2,7 @@ import React, {state}from 'react';
 import { connect } from 'react-redux';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 
-import Chatkit from '@pusher/chatkit';
+import Chatkit, { currentUser ,getJoinableRooms} from '@pusher/chatkit';
 
 // import  { tokenUrl , instanceLocator }  from './config';
 import * as actions from './store/actions/index';
@@ -46,39 +46,39 @@ class App extends React.Component {
         // })
     }
 
-    getJoinableRooms = () => {
-        this.currentUser.getJoinableRooms()
-        .then(joinableRooms => {
-            this.setState({
-                    joinableRooms,
-                    joinedRooms: this.currentUser.rooms
-            })
-        })
-        .catch(error => {
-            console.log('[ERROR FETCHING ROOMS]: ', error);
-        });
-    }
+    // getJoinableRooms = () => {
+    //     this.currentUser.getJoinableRooms()
+    //     .then(joinableRooms => {
+    //         this.setState({
+    //                 joinableRooms,
+    //                 joinedRooms: this.currentUser.rooms
+    //         })
+    //     })
+    //     .catch(error => {
+    //         console.log('[ERROR FETCHING ROOMS]: ', error);
+    //     });
+    // }
 
-    subscribeToRoom = (roomId) => {
-        this.setState({messages:[]});
-        this.currentUser.subscribeToRoom({
-            roomId: roomId,
-            hooks:{
-                onNewMessage: message => {
-                    this.setState({
-                        messages: [...this.state.messages, message]
-                    })
-                }
-            }
-        })
-        .then( room => {
-            this.setState({roomId: room.id});
-            this.getJoinableRooms();
-        })
-        .catch( error => {
-            console.log('[ERROR SUBSCRIBING ROOM]: ', error);
-        })
-    }
+    // subscribeToRoom = (roomId) => {
+    //     this.setState({messages:[]});
+    //     this.currentUser.subscribeToRoom({
+    //         roomId: roomId,
+    //         hooks:{
+    //             onNewMessage: message => {
+    //                 this.setState({
+    //                     messages: [...this.state.messages, message]
+    //                 })
+    //             }
+    //         }
+    //     })
+    //     .then( room => {
+    //         this.setState({roomId: room.id});
+    //         this.getJoinableRooms();
+    //     })
+    //     .catch( error => {
+    //         console.log('[ERROR SUBSCRIBING ROOM]: ', error);
+    //     })
+    // }
 
     sendMessage = (text) => {
         this.currentUser.sendMessage({
@@ -100,22 +100,7 @@ class App extends React.Component {
     }
 
     render() {
-        // console.log('[LOADING]: ' + )
-        // let rooms = null
-        // if(this.props.user){
-            
 
-        //     this.props.user.getJoinableRooms()
-        //     .then(joinableRooms => {
-        //         this.props.user.rooms.map( room => {
-        //             console.log('[room]: ' , room.name)
-        //         })
-        //     })
-        //     .catch(error => {
-        //         console.log('[ERROR FETCHING ROOMS]: ', error);
-        //     });
-            
-        // }
 
         let routes = (
             <Switch>
