@@ -6,6 +6,9 @@
     --send-message-form: white;
 }
 
+::placeholder{
+    color: var(--main-text-color);
+}
 
 html, body {
     height: 100%;
@@ -194,16 +197,19 @@ html, body {
 .login {
     display: grid;
     height: 100%;
+    background-color: var(--main-color);
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
     grid-template-areas: 
-        ". . . . . ."
+        ". h h h h ."
         ". l l l l ."
         ". i i i i ."
         ". b b b b ."
         ". . . . . ."
         ". . . . . .";
 }
+
+
 
 .login-input-area {
     grid-area: l;
@@ -217,6 +223,16 @@ html, body {
     grid-area: i;
 }
 
+.login-header-area {
+    grid-area: h;
+}
+
+.login-header {
+    text-align: center;
+    font-size: 100px;
+    color: var(--send-message-form);
+}
+
 .login-input{
     font-size: 50px;
     
@@ -226,7 +242,17 @@ html, body {
     width: 90%;
     margin: auto;
     text-align: center;
+    background-color: var(--secondary-color);
+    color: var(--main-text-color);
 }
+
+.login-info-header {
+    margin: auto;
+    text-align: center;
+    padding: 35px;
+    color: var(--send-message-form);
+}
+
 
 .login-button{
     /* display: flex; */
@@ -236,5 +262,12 @@ html, body {
     width: 90%;
     margin: auto;
     text-align: center;
-    box-shadow: black 20px
+    box-shadow: var(--secondary-text-color) 10px 10px 10px 10px;
+    background-color: var(--secondary-color);
+    color: var(--main-text-color);
 }
+
+
+
+
+

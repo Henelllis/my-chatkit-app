@@ -6,7 +6,7 @@ import Chatkit from '@pusher/chatkit';
 // import  { tokenUrl , instanceLocator }  from './config';
 import * as actions from './store/actions/index';
 
-import LoginPage from './components/LoginPage';
+import LoginPage from './components/LoginPage/LoginPage';
 import MessageList from './components/MessageList'
 import SendMessageForm from './components/SendMessageForm'
 import RoomList from './components/RoomList'
