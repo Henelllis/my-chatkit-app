@@ -59,6 +59,26 @@ class Layout extends Component {
         })
     }
 
+    sendMessage = (text) => {
+        this.props.user.sendMessage({
+            text,
+            roomId: this.state.roomId
+        });
+    }
+
+    createRoom = (name) => {
+        this.props.user.createRoom({
+            name
+        })
+        .then(room =>{
+            this.subscribeToRoom(room.id)
+        })
+        .catch(error => {
+            console.log('ERROR CREATING NEW ROOM ' , error)
+        });
+    }
+
+
 
     render() {
         return(
@@ -70,9 +90,11 @@ class Layout extends Component {
                 <MessageList 
                     roomId={this.state.roomId}
                     messages={this.state.messages}/>
-                <SendMessageForm />
-                
-                <NewRoomForm/>
+                <SendMessageForm
+                    disabled={!this.state.roomId} 
+                    onSendMessage={this.sendMessage} />
+                <NewRoomForm
+                    createRoom={this.createRoom}/>
             </div>
         )
     }
