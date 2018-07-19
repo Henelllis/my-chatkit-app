@@ -1,12 +1,13 @@
 import React, {state}from 'react';
 import { connect } from 'react-redux';
+import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 
 import Chatkit from '@pusher/chatkit';
 
 // import  { tokenUrl , instanceLocator }  from './config';
 import * as actions from './store/actions/index';
-
 import LoginPage from './components/LoginPage/LoginPage';
+import Layout from './containers/Layout/Layout';
 import MessageList from './components/MessageList'
 import SendMessageForm from './components/SendMessageForm'
 import RoomList from './components/RoomList'
@@ -22,8 +23,8 @@ class App extends React.Component {
     }
 
     componentDidMount () {
-        console.log('[BEFORE LOGIN]');
-        this.props.onLogin()
+        //move to Login App
+        // this.props.onLogin()
        
 
         
@@ -100,27 +101,42 @@ class App extends React.Component {
 
     render() {
         // console.log('[LOADING]: ' + )
-        let rooms = null
-        if(this.props.user){
+        // let rooms = null
+        // if(this.props.user){
             
 
-            this.props.user.getJoinableRooms()
-            .then(joinableRooms => {
-                this.props.user.rooms.map( room => {
-                    console.log('[room]: ' , room.name)
-                })
-            })
-            .catch(error => {
-                console.log('[ERROR FETCHING ROOMS]: ', error);
-            });
+        //     this.props.user.getJoinableRooms()
+        //     .then(joinableRooms => {
+        //         this.props.user.rooms.map( room => {
+        //             console.log('[room]: ' , room.name)
+        //         })
+        //     })
+        //     .catch(error => {
+        //         console.log('[ERROR FETCHING ROOMS]: ', error);
+        //     });
             
-        }
+        // }
+
+        let routes = (
+            <Switch>
+                <Route exact path='/'      component={LoginPage}/>
+                <Redirect to='/' />
+            </Switch>
+        );
         
+        if(this.props.user){
+            routes = (
+                <Switch>
+                    <Route exact path='/chat' component={Layout}/>
+                    <Route exact path='/'      component={LoginPage}/>
+                    <Redirect to='/' />
+                </Switch>
+            )
+        }
         //Layout page should use layout CSS selector
         return (
             <div >
-
-                <LoginPage/>
+                {routes}
                 {/* <RoomList 
                           roomId={this.state.roomId}
                           subscribeToRoom={this.subscribeToRoom}
@@ -150,4 +166,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps )(App);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps )(App));

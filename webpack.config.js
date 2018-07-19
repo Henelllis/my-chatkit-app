@@ -1,10 +1,12 @@
 'use strict';
-
+var path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   "output": {
-    "filename": "[name].pack.js"
+     path: path.resolve(__dirname, 'dist'),
+    "filename": "[name].pack.js",
+    publicPath: '/'
   },
   "module": {
     "rules": [
@@ -27,8 +29,10 @@ module.exports = {
   },
   "entry": {
     "index": "./src/index"
-  }
-  ,
+  },
+  devServer:{
+    historyApiFallback: true,
+  },
   plugins:[
     new HtmlWebpackPlugin({
       template: __dirname +'/src/index.html',

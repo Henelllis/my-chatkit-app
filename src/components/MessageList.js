@@ -6,6 +6,10 @@ import Message from './Message';
 
 class MessageList extends Component{
 
+    componentDidMount(){
+        console.log("IM HERE DING BAT BRIGADE");
+    }
+
     componentWillUpdate(){
         const node = ReactDOM.findDOMNode(this);
         this.shouldScrollToBottom = node.scrollTop + node.clientHeight + 100 >= node.scrollHeight;

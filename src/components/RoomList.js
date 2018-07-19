@@ -1,6 +1,16 @@
 import React from 'react'
 
 const RoomList = (props) =>  {
+
+        if(!props.room){
+            return <div className="rooms-list"> 
+                        <h1 className="rooms-list">
+                            NO ROOMS LOADED
+                        </h1>
+                    </div>
+        }
+
+        
         return (
             <div className="rooms-list">
                 <ul className="rooms-list">
