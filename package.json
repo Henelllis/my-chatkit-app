@@ -2,6 +2,7 @@
   "name": "my-chatkit-app",
   "homepage": "https://Henelllis.github.io/my-chatkit-app/",
   "dependencies": {
+    "@material-ui/core": "^1.4.0",
     "@pusher/chatkit": "0.7.12",
     "babel-preset-stage-2": "^6.24.1",
     "gh-pages": "^1.2.0",

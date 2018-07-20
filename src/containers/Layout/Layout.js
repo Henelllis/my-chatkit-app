@@ -7,6 +7,7 @@ import MessageList from '../../components/MessageList'
 import SendMessageForm from '../../components/SendMessageForm'
 import RoomList from '../../components/RoomList'
 import NewRoomForm from '../../components/NewRoomForm'
+import OnlineUsersList from '../../components/OnlineUsersList';
 
 class Layout extends Component {
 
@@ -14,7 +15,8 @@ class Layout extends Component {
         messages:[],
         joinableRooms:[],
         joinedRooms:[],
-        roomId: ''
+        roomId: '',
+        users:[]
     }
 
 
@@ -53,10 +55,20 @@ class Layout extends Component {
         .then( room => {
             this.setState({roomId: room.id});
             this.getJoinableRooms();
+  
+            this.getOnlineUsers();
         })
         .catch( error => {
             console.log('[ERROR SUBSCRIBING ROOM]: ', error);
         })
+    }
+
+    getOnlineUsers = () => {
+        let usersFromRoom = [];
+        const room = this.props.user.rooms.find( val => val.id === this.state.roomId);
+        usersFromRoom = room.userIds;
+        this.setState({users : usersFromRoom});
+
     }
 
     sendMessage = (text) => {
@@ -93,6 +105,8 @@ class Layout extends Component {
                 <SendMessageForm
                     disabled={!this.state.roomId} 
                     onSendMessage={this.sendMessage} />
+                <OnlineUsersList
+                    onlineUsers={this.state.users}/>
                 <NewRoomForm
                     createRoom={this.createRoom}/>
             </div>
