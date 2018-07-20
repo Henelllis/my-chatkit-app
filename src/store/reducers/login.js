@@ -15,7 +15,6 @@ const loginStart = (state,action) => {
 }
 
 const loginSuccess = (state,action) => {
-    console.log('THIS IS HOW WE DO IT');
     return {
         ...state,
         error: false,

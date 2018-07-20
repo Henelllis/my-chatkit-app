@@ -109,18 +109,3 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps)(Layout);
 
-
-                // {/* <RoomList /> */}
-                //     {/* roomId={this.state.roomId}
-                //     subscribeToRoom={this.subscribeToRoom}
-                //     rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}/> */}
-                // {/* <MessageList /> */}
-                //     {/* roomId={this.state.roomId} 
-                //     messages={this.state.messages}/>                 */}
-                //     <SendMessageForm
-                //     // disabled={!this.state.roomId} 
-                //     // onSendMessage={this.sendMessage} 
-                //     />
-                // <NewRoomForm 
-                // // createRoom={this.createRoom}
-                // />
