@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import pink from '@material-ui/core/colors/pink';
 
-import OnlineUser from './OnlineUser';
-
 const styles = {
     row: {
     //   display: 'inline',
