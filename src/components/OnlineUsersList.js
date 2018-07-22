@@ -8,7 +8,7 @@ import pink from '@material-ui/core/colors/pink';
 const styles = {
     row: {
     //   display: 'inline',
-      justifyContent: 'center',
+    justifyContent: 'center',
     },
     avatar: {
       margin: 10,
@@ -48,7 +48,7 @@ class OnlineUsersList extends Component{
                                 return (
                                     <li key={user} className='user'>
                                         <div className={classes.row}>
-                                            <a><Avatar className={classes.pinkAvatar}>{user.charAt(0)}</Avatar><p>{user}</p></a>
+                                            <a><Avatar className={classes.pinkAvatar}>{user.charAt(0)}</Avatar><p style={{float:'right',marginTop:'-40px', marginRight:'100px'}}>{user}</p></a>
                                         </div>
                                     </li>
                                 )
