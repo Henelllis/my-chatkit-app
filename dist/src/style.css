@@ -23,18 +23,20 @@ html, body {
     height: 100%;
 }
 
+/*  bottom m's become isTyping*/
+/*  rightmost m's become UsersInChat*/
 .layout {
     display: grid;
     height: 100%;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
     grid-template-areas: 
-        "m m m m m r"
-        "m m m m m r"
-        "m m m m m r"
-        "m m m m m r"
-        "m m m m m r"
-        "f f f f f n";
+        "m m m m c r"
+        "m m m m c r"
+        "m m m m c r"
+        "m m m m c r"
+        "m m m m c r"
+        "f f f f n n";
 }
 
 .new-room-form {
@@ -51,6 +53,10 @@ html, body {
 
 .send-message-form {
     grid-area: f;
+}
+
+.online-users-list{
+    grid-area: c;
 }
 
 /* REST OF CSS */
@@ -88,6 +94,42 @@ html, body {
     color: var(--secondary-color);
 }
 
+/* *********************************************/
+.online-users-list {
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: var(--main-text-color);
+    overflow: scroll;
+    height: 100%;
+}
+
+.online-users-list > ul {
+    list-style-type: none;    
+    padding: 0;
+    overflow: scoll;
+}
+
+.online-users-list li {
+    margin: 10px 0;
+}
+
+.online-users-list > h3 {
+    margin: 5px 0;
+    color: var(--secondary-color);
+}
+
+.online-users-list .user a {
+    color: var(--send-message-form);
+    font-weight: 600;
+    text-decoration: none;
+    
+ }
+
+.online-users-list .user.active a {
+    color: var(--secondary-color);
+}
+
+/* *********************************************/
 .new-room-form {
     padding: 0 5px;
     height:60px;
